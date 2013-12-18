@@ -8,4 +8,4 @@ rescue LoadError
   require "lolcode"
 end
 
-Lolcode::CLI.start
+Lolcode::CLI.new
