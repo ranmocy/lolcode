@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+begin
+  require "lolcode"
+rescue LoadError
+  warn "[Warning] Lolcode gem missing. Use local version instead."
+  $LOAD_PATH.push(File.expand_path('../../lib', __FILE__)).uniq!
+  require "lolcode"
+end
+
+Lolcode::CLI.start
