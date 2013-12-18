@@ -29,6 +29,9 @@ module Lolcode
       # Varible assignment
       line.gsub!(/\bI HAS A (\w+)\b/, '@\1 = nil')
 
+      # TODO: Library
+      line.gsub!(/\bCAN HAS (\w+)\b/, '# require \'\1\'')
+
       puts "[INFO] Ruby code: #{line}" if self.verbose
 
       begin
