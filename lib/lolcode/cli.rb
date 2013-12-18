@@ -1,5 +1,6 @@
 require 'ostruct'
 require 'optparse'
+require_relative 'vm'
 
 module Lolcode
   class CLI
@@ -37,13 +38,23 @@ banner
     private
 
     def interpretor
-      puts 'TODO - should begin a interpretor'
+      puts "Welcome to use LOLCODE interpretor."
+      vm = VM.new
+      print "=>"
+      while line = readline
+        vm.run(line)
+        print "=>"
+      end
     end
 
     def excutor
-      files.each do |file|
-        puts "TODO - should run file #{file}"
+      files.each do |filename|
+        vm = VM.new
+        File.open(filename).readlines.each do |line|
+          vm.run(line)
+        end
       end
     end
+
   end
 end
