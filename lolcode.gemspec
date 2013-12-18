@@ -1,11 +1,9 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'lolcode/version'
+$LOAD_PATH.push(File.expand_path('../lib', __FILE__)).uniq!
 
 Gem::Specification.new do |spec|
   spec.name          = "lolcode"
-  spec.version       = Lolcode::VERSION
+  spec.version       = File.open('VERSION') { |f| f.read }
   spec.authors       = ["Ranmocy Sheng"]
   spec.email         = ["ranmocy@gmail.com"]
   spec.description   = %q{TODO: Write a gem description}
@@ -20,4 +18,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "version"
 end
