@@ -26,6 +26,9 @@ module Lolcode
       line.gsub!(/\bVISIBLE\b/, 'puts')
       line.gsub!(/\bINVISIBLE\b/, 'warn')
 
+      # Varible assignment
+      line.gsub!(/\bI HAS A (\w+)\b/, '@\1 = nil')
+
       puts "[INFO] Ruby code: #{line}" if self.verbose
 
       begin
