@@ -1,7 +1,8 @@
 module Lolcode
   class VM
 
-    def initialize
+    def initialize(options={})
+      self.verbose = options[:verbose]
       puts 'TODO - should init a VM'
     end
 

@@ -1,12 +1,13 @@
-require 'ostruct'
 require 'optparse'
 require_relative 'vm'
 
 module Lolcode
   class CLI
-    attr_accessor :files, :verbose
+    attr_accessor :files, :options
 
     def initialize
+      self.options = {}
+
       OptionParser.new do |opts|
         opts.banner =
 <<-banner
@@ -16,7 +17,7 @@ Usage: lolcode [options] [file]
 banner
 
         opts.on("-v", "Run verbosely") do |v|
-          self.verbose = v
+          self.options[:verbose] = v
         end
 
         opts.on_tail("-h", "--help", "Show this message") do
@@ -39,7 +40,7 @@ banner
 
     def interpretor
       puts "Welcome to use LOLCODE interpretor."
-      vm = VM.new
+      vm = VM.new(self.options)
       print "=>"
       while line = readline
         vm.run(line)
@@ -49,7 +50,7 @@ banner
 
     def excutor
       files.each do |filename|
-        vm = VM.new
+        vm = VM.new(self.options)
         File.open(filename).readlines.each do |line|
           vm.run(line)
         end
