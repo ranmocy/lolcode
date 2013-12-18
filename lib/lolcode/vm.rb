@@ -6,6 +6,9 @@ module Lolcode
     attr_accessor :vars, :started, :verbose
 
     def initialize(options={})
+      $stdout.sync = true
+      $stderr.sync = true
+
       halt
       self.verbose = options[:verbose] || false
       self.vars = {}
@@ -28,8 +31,11 @@ module Lolcode
       begin
         eval line
       rescue
-        warn "[ERROR] Exec Error: #{line}"
+        puts "[ERROR] Exec Error: #{line}"
       end
+
+      $stdout.flush
+      $stderr.flush
     end
 
 
