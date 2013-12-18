@@ -24,10 +24,12 @@ module Lolcode
 
     def start
       self.started = true
+      puts "[INFO] Now LOLCODE VM is started" if self.verbose
     end
 
     def halt
       self.started = false
+      puts "[INFO] Now LOLCODE VM is halted" if self.verbose
     end
 
     def started?
