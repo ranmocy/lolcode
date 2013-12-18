@@ -12,18 +12,24 @@ module Lolcode
     end
 
     def run(line)
-      puts "[INFO] Run line: #{line}" if self.verbose
+      puts "[INFO] Orig line: #{line}" if self.verbose
 
-      line.gsub!(/\bBTW\b.*/, '') # remove BTW comments
+      line.gsub!(/\bBTW\b/, ' # ') # BTW comments
 
       (start; return) if line =~ /^HAI\b.*/    # start VM
       (halt; return) if line =~ /^KTHXBYE\b.*/ # halt VM
       return unless started?
 
-      (visible $1; return) if line =~ /^VISIBLE\s+(.*)$/
-      (invisible $1; return) if line =~ /^INVISIBLE\s+(.*)$/
+      line.gsub!(/\bVISIBLE\b/, 'puts')
+      line.gsub!(/\bINVISIBLE\b/, 'warn')
 
-      puts "TODO - should run line #{line}"
+      puts "[INFO] Ruby code: #{line}" if self.verbose
+
+      begin
+        eval line
+      rescue
+        warn "[ERROR] Exec Error: #{line}"
+      end
     end
 
 
@@ -41,27 +47,6 @@ module Lolcode
 
     def started?
       self.started
-    end
-
-
-    def visible content
-      if is_string(content)
-        puts $1
-      elsif self.vars.include? content
-        puts self.vars[content]
-      else
-        raise Lolcode::MissingVars, content
-      end
-    end
-
-    def invisible content
-      if is_string(content)
-        warn content
-      elsif self.vars.include? content
-        warn self.vars[content]
-      else
-        raise Lolcode::MissingVars, content
-      end
     end
 
 
