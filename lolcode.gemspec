@@ -1,4 +1,3 @@
-# coding: utf-8
 $LOAD_PATH.push(File.expand_path('../lib', __FILE__)).uniq!
 
 Gem::Specification.new do |spec|
@@ -6,9 +5,9 @@ Gem::Specification.new do |spec|
   spec.version       = File.open('VERSION') { |f| f.read }
   spec.authors       = ["Ranmocy Sheng"]
   spec.email         = ["ranmocy@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = %q{LOLCODE interpreter for English and Chinese}
+  spec.summary       = %q{LOLCODE interpreter for English and Chinese version stand on Ruby}
+  spec.homepage      = "https://github.com/ranmocy/lolcode"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
