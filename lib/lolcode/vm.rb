@@ -21,6 +21,7 @@ module Lolcode
       return unless started?
 
       (visible $1; return) if line =~ /^VISIBLE\s+(.*)$/
+      (invisible $1; return) if line =~ /^INVISIBLE\s+(.*)$/
 
       puts "TODO - should run line #{line}"
     end
@@ -42,8 +43,9 @@ module Lolcode
       self.started
     end
 
+
     def visible content
-      if content =~ /^\"(.*)\"$/
+      if is_string(content)
         puts $1
       elsif self.vars.include? content
         puts self.vars[content]
@@ -51,5 +53,21 @@ module Lolcode
         raise Lolcode::MissingVars, content
       end
     end
+
+    def invisible content
+      if is_string(content)
+        warn content
+      elsif self.vars.include? content
+        warn self.vars[content]
+      else
+        raise Lolcode::MissingVars, content
+      end
+    end
+
+
+    def is_string content
+      content =~ /^\"(.*)\"$/
+    end
+
   end
 end
