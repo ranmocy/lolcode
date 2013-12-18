@@ -5,7 +5,7 @@ module Lolcode
 
     def initialize(options={})
       halt
-      self.verbose = options[:verbose]
+      self.verbose = options[:verbose] || false
       self.vars = {}
     end
 
