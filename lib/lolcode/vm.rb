@@ -108,8 +108,11 @@ module Lolcode
       self.block_level > 0
     end
 
-    def is_string content
-      content =~ /^\"(.*)\"$/
+    def type_of string
+      return :string if string =~ /^\"(.*)\"$/
+      return :int if string =~ /^[0-9]+$/
+      return :symbol if string =~ /^\w+$/
+      return :untyped
     end
 
   end
