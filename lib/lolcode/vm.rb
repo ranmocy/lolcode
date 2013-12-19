@@ -73,7 +73,15 @@ module Lolcode
       line.gsub!(/\bINVISIBLE\b/, 'warn')
 
       # Varible assignment
-      line.gsub!(/\bI HAS A (\w+) ITZ (\w+)/, '@\1 = \2')
+      line.gsub!(/\bI\s+HAS\s+A\s+(\w+)\s+ITZ\s+([\"\w]+)/) do |s|
+        m = /\bI HAS A (\w+) ITZ ([\"\w]+)/.match s
+        case type_of(m[2])
+        when :symbol
+          "@#{m[1]} = @#{m[2]}"
+        else
+          "@#{m[1]} = #{m[2]}"
+        end
+      end
       line.gsub!(/\bI HAS A (\w+)\b/, '@\1 = nil')
 
       # TODO: Library
