@@ -1,24 +1,21 @@
-# Lolcode
+# LOLCODE
 
-TODO: Write a gem description
+LOLCODE interpreter for English and Chinese version stand on Ruby.
+
+Currently working on English version.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'lolcode'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Probably you will install it yourself as:
 
     $ gem install lolcode
 
 ## Usage
 
-TODO: Write usage instructions here
+Directly run `lolcode` will give you a interpretor,
+or you can specify a file like `lolcode FILE.lol` to run the lol script.
+
+For more information, please use `lolcode -h` for help.
 
 ## Contributing
 
