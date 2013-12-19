@@ -38,8 +38,9 @@ module Lolcode
       self.buffer << line
       return if open_block?
 
+      res = nil
       begin
-        eval self.buffer
+        res = eval self.buffer
         reset_buffer
       rescue
         puts "[ERROR] Exec Error: #{line}"
@@ -47,6 +48,8 @@ module Lolcode
 
       $stdout.flush
       $stderr.flush
+
+      res
     end
 
 

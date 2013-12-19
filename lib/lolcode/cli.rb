@@ -41,10 +41,10 @@ banner
     def interpretor
       puts "Welcome to use LOLCODE interpretor."
       vm = VM.new(self.options)
-      print "=>"
+      print "(lol)>"
       while line = readline
-        vm.run(line)
-        print "=>"
+        puts "=> #{vm.run(line)}"
+        print "(lol)>"
       end
     end
 
