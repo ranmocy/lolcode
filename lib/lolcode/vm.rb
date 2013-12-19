@@ -52,7 +52,9 @@ module Lolcode
     def translate(line)
       line = line.dup
 
-      line.gsub!(/\bBTW\b/, ' # ') # BTW comments
+      line.gsub!(/\bBTW\b/, ' # ')         # BTW comments
+      line.gsub!(/\bOBTW\b/, '\n=begin\n') # multiline comments begin
+      line.gsub!(/\bTLDR\b/, '\n=end\n')   # multiline comments end
 
       line.gsub!(/\bVISIBLE\b/, 'puts')
       line.gsub!(/\bINVISIBLE\b/, 'warn')
