@@ -69,12 +69,28 @@ module Lolcode
         "\n=end\n"
       end
 
-      line.gsub!(/\bVISIBLE\b/, 'puts')
-      line.gsub!(/\bINVISIBLE\b/, 'warn')
+      line.gsub!(/\bVISIBLE\s+([\"\w]+)/) do |s|
+        m = /\bVISIBLE\s+([\"\w]+)/.match s
+        case type_of(m[1])
+        when :symbol
+          "puts @#{m[1]}"
+        else
+          "puts #{m[1]}"
+        end
+      end
+      line.gsub!(/\bINVISIBLE\s+([\"\w]+)/) do |s|
+        m = /\bINVISIBLE\s+([\"\w]+)/.match s
+        case type_of(m[1])
+        when :symbol
+          "warn @#{m[1]}"
+        else
+          "warn #{m[1]}"
+        end
+      end
 
       # Varible assignment
       line.gsub!(/\bI\s+HAS\s+A\s+(\w+)\s+ITZ\s+([\"\w]+)/) do |s|
-        m = /\bI HAS A (\w+) ITZ ([\"\w]+)/.match s
+        m = /\bI\s+HAS\s+A\s+(\w+)\s+ITZ\s+([\"\w]+)/.match s
         case type_of(m[2])
         when :symbol
           "@#{m[1]} = @#{m[2]}"
@@ -82,10 +98,10 @@ module Lolcode
           "@#{m[1]} = #{m[2]}"
         end
       end
-      line.gsub!(/\bI HAS A (\w+)\b/, '@\1 = nil')
+      line.gsub!(/\bI\s+HAS\s+A\s+(\w+)/, '@\1 = nil')
 
       # TODO: Library
-      line.gsub!(/\bCAN HAS (\w+)\b/, '# require \'\1\'')
+      line.gsub!(/\bCAN\s+HAS\s+(\w+)/, '# require \'\1\'')
 
       return line
     end
