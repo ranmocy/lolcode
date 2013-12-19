@@ -18,24 +18,15 @@ module Lolcode
     def run(line)
       puts "[INFO] Orig line: #{line}" if self.verbose
 
-      line.gsub!(/\bBTW\b/, ' # ') # BTW comments
-
       (start; return) if line =~ /^HAI\b.*/    # start VM
       (halt; return) if line =~ /^KTHXBYE\b.*/ # halt VM
       return unless started?
 
-      line.gsub!(/\bVISIBLE\b/, 'puts')
-      line.gsub!(/\bINVISIBLE\b/, 'warn')
+      ruby_line = translate(line)
 
-      # Varible assignment
-      line.gsub!(/\bI HAS A (\w+)\b/, '@\1 = nil')
+      puts "[INFO] Ruby code: #{ruby_line}" if self.verbose
 
-      # TODO: Library
-      line.gsub!(/\bCAN HAS (\w+)\b/, '# require \'\1\'')
-
-      puts "[INFO] Ruby code: #{line}" if self.verbose
-
-      self.buffer << line
+      self.buffer << ruby_line
       return if open_block?
 
       res = nil
@@ -55,6 +46,24 @@ module Lolcode
     # Flush the buffer
     def flush
       run('')
+    end
+
+    # Translate to Ruby
+    def translate(line)
+      line = line.dup
+
+      line.gsub!(/\bBTW\b/, ' # ') # BTW comments
+
+      line.gsub!(/\bVISIBLE\b/, 'puts')
+      line.gsub!(/\bINVISIBLE\b/, 'warn')
+
+      # Varible assignment
+      line.gsub!(/\bI HAS A (\w+)\b/, '@\1 = nil')
+
+      # TODO: Library
+      line.gsub!(/\bCAN HAS (\w+)\b/, '# require \'\1\'')
+
+      return line
     end
 
 
