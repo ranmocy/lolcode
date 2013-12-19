@@ -52,6 +52,11 @@ module Lolcode
       res
     end
 
+    # Flush the buffer
+    def flush
+      run('')
+    end
+
 
     private
 

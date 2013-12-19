@@ -54,6 +54,7 @@ banner
         File.open(filename).readlines.each do |line|
           vm.run(line)
         end
+        vm.flush
       end
     end
 
