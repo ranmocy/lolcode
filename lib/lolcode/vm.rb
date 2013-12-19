@@ -6,12 +6,9 @@ module Lolcode
     attr_accessor :buffer, :block_level, :started, :verbose
 
     def initialize(options={})
+      reset_all
       $stdout.sync = true
       $stderr.sync = true
-
-      halt
-      reset_buffer
-      self.block_level = 0
       self.verbose = options[:verbose] || false
     end
 
@@ -115,7 +112,7 @@ module Lolcode
     end
 
     def halt
-      self.started = false
+      reset_all
       puts "[INFO] Now LOLCODE VM is halted" if self.verbose
     end
 
@@ -125,6 +122,13 @@ module Lolcode
 
     def reset_buffer
       self.buffer = ""
+    end
+
+    def reset_all
+      instance_variables.each { |v| remove_instance_variable(v) }
+      self.started = false
+      self.block_level = 0
+      reset_buffer
     end
 
 
