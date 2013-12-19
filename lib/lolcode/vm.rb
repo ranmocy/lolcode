@@ -22,7 +22,10 @@ module Lolcode
       (halt; return) if line =~ /^KTHXBYE\b.*/ # halt VM
       return unless started?
 
-      ruby_line = translate(line)
+      # TODO: comma in the string shouldn't be splited
+      ruby_line = line.split(',').collect do |l|
+        translate(l)
+      end.join
 
       puts "[INFO] Ruby code: #{ruby_line}" if self.verbose
 
