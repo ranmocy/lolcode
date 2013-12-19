@@ -60,6 +60,7 @@ module Lolcode
       line.gsub!(/\bINVISIBLE\b/, 'warn')
 
       # Varible assignment
+      line.gsub!(/\bI HAS A (\w+) ITZ (\w+)/, '@\1 = \2')
       line.gsub!(/\bI HAS A (\w+)\b/, '@\1 = nil')
 
       # TODO: Library
