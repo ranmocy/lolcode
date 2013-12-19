@@ -3,7 +3,7 @@ require_relative 'errors'
 module Lolcode
   class VM
 
-    attr_accessor :buffer, :started, :verbose
+    attr_accessor :buffer, :block_level, :started, :verbose
 
     def initialize(options={})
       $stdout.sync = true
@@ -11,6 +11,7 @@ module Lolcode
 
       halt
       reset_buffer
+      self.block_level = 0
       self.verbose = options[:verbose] || false
     end
 
@@ -35,6 +36,7 @@ module Lolcode
       puts "[INFO] Ruby code: #{line}" if self.verbose
 
       self.buffer << line
+      return if open_block?
 
       begin
         eval self.buffer
@@ -68,6 +70,10 @@ module Lolcode
       self.buffer = ""
     end
 
+
+    def open_block?
+      self.block_level > 0
+    end
 
     def is_string content
       content =~ /^\"(.*)\"$/
