@@ -103,6 +103,10 @@ module Lolcode
       return line
     end
 
+    def started?
+      self.started
+    end
+
 
     private
 
@@ -114,10 +118,6 @@ module Lolcode
     def halt
       reset_all
       puts "[INFO] Now LOLCODE VM is halted" if self.verbose
-    end
-
-    def started?
-      self.started
     end
 
     def reset_buffer
