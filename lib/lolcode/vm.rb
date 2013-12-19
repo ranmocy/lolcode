@@ -25,7 +25,7 @@ module Lolcode
       # TODO: comma in the string shouldn't be splited
       ruby_line = line.split(',').collect do |l|
         translate(l)
-      end.join
+      end.join(';')
 
       puts "[INFO] Ruby code: #{ruby_line}" if self.verbose
 
