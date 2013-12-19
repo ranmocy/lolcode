@@ -34,6 +34,7 @@ module Lolcode
 
       res = nil
       begin
+        puts "[INFO] Eval code: #{self.buffer}" if self.verbose
         res = eval self.buffer
         reset_buffer
       rescue
@@ -56,8 +57,17 @@ module Lolcode
       line = line.dup
 
       line.gsub!(/\bBTW\b/, ' # ')         # BTW comments
-      line.gsub!(/\bOBTW\b/, '\n=begin\n') # multiline comments begin
-      line.gsub!(/\bTLDR\b/, '\n=end\n')   # multiline comments end
+      # line.gsub!(/\bOBTW\b/, '\n=begin\n') # multiline comments begin
+      # multiline comments begin
+      line.gsub!(/\bOBTW\b/) do |s|
+        self.block_level += 1
+        "\n=begin\n"
+      end
+      # multiline comments end
+      line.gsub!(/\bTLDR\b/) do |s|
+        self.block_level -= 1
+        "\n=end\n"
+      end
 
       line.gsub!(/\bVISIBLE\b/, 'puts')
       line.gsub!(/\bINVISIBLE\b/, 'warn')
