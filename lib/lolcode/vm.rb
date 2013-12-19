@@ -3,15 +3,15 @@ require_relative 'errors'
 module Lolcode
   class VM
 
-    attr_accessor :vars, :started, :verbose
+    attr_accessor :buffer, :started, :verbose
 
     def initialize(options={})
       $stdout.sync = true
       $stderr.sync = true
 
       halt
+      reset_buffer
       self.verbose = options[:verbose] || false
-      self.vars = {}
     end
 
     def run(line)
@@ -34,8 +34,11 @@ module Lolcode
 
       puts "[INFO] Ruby code: #{line}" if self.verbose
 
+      self.buffer << line
+
       begin
-        eval line
+        eval self.buffer
+        reset_buffer
       rescue
         puts "[ERROR] Exec Error: #{line}"
       end
@@ -59,6 +62,10 @@ module Lolcode
 
     def started?
       self.started
+    end
+
+    def reset_buffer
+      self.buffer = ""
     end
 
 
